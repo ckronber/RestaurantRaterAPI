@@ -10,7 +10,9 @@ namespace RestaurantRaterAPI.Models
     {
         public RestaurantDbContext() : base("DefaultConnection") { }
 
-        public DbSet<Restaurant> Restaurants { get; set; }
+        public DbSet<Restaurant> Restaurants { get; set; } //ads Restaurant Table
+
+        public DbSet<Rating> Ratings { get; set; }  //ads new table
       
     }
 }
