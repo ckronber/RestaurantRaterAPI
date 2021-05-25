@@ -16,6 +16,7 @@ namespace RestaurantRaterAPI.Controllers
         [HttpPost]
         public async Task<IHttpActionResult> PostRating(Rating model)
         {
+           
             if (!ModelState.IsValid)
             {
                 return BadRequest();
