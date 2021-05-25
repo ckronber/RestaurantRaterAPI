@@ -40,6 +40,7 @@ namespace RestaurantRaterAPI.Controllers
             List<Restaurant> restaurants = await _context.Restaurants.ToListAsync();
             return Ok(restaurants);
         }
+
         //GetbyID
         [HttpGet]
         public async Task<IHttpActionResult> GetRestaurantById(int Id)
@@ -49,6 +50,7 @@ namespace RestaurantRaterAPI.Controllers
                 return Ok(restaurant);
             return NotFound();
         }
+
         //Update(PUT)
         [HttpPut]
         public async Task<IHttpActionResult> UpdateRestaurant(int Id,Restaurant updatedRestaurant)
@@ -68,6 +70,7 @@ namespace RestaurantRaterAPI.Controllers
             }
             return BadRequest(ModelState);
         }
+
         //Delete
         [HttpDelete]
         public async Task<IHttpActionResult> DeleteRestaurant(int Id)

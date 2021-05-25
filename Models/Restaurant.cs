@@ -77,6 +77,7 @@ namespace RestaurantRaterAPI.Models
                 return totalCleanlinessScore / Ratings.Count;
             }
         }
+
         public bool IsRecommended => Rating > 8.5; // shorter formatting for get rating > 3.5 and if it is return true or false
         
     }

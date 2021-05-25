@@ -36,9 +36,28 @@ namespace RestaurantRaterAPI.Controllers
             return InternalServerError();
         }
 
-        //GetAllRatings
-        
-        //GetRaingsByID
-        //
+        //GetRatingsbyRestaurantID
+        [HttpGet]
+        public async Task<IHttpActionResult> GetRatingById(int RestaurantID)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            Restaurant restaurant = await _context.Restaurants.FindAsync(RestaurantID);
+
+            if (restaurant == null)
+            {
+                return BadRequest($"The target restaurant with the Id of {RestaurantID} does not exist");
+            }
+            else
+            {
+                return Ok(restaurant.Ratings);
+            }
+            return InternalServerError();
+        }
+        //UpdateRating
+        //DeleteRating
     }
 }
