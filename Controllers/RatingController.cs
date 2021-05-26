@@ -86,8 +86,8 @@ namespace RestaurantRaterAPI.Controllers
         }
       
         //DeleteRating
-        [HttpDelete]
-        public async Task<IHttpActionResult> DeleteRestaurantId(int Id,Rating model)
+        [HttpDelete,Route("api/Rating/DeleteFromRestaurant/{Id}")]
+        public async Task<IHttpActionResult> DeleteRatingByRestaurantId(int Id,Rating model)
         {
             if (!ModelState.IsValid)
             {
@@ -101,9 +101,9 @@ namespace RestaurantRaterAPI.Controllers
                 return BadRequest("Restaurant Not Found");
             }
 
+            model.RestaurantId = restaurant.Id;
+
             Rating rating = await _context.Ratings.FindAsync(model.Id);
-            rating.RestaurantId = restaurant.Id;
-            
             _context.Ratings.Remove(rating);
 
             if (await _context.SaveChangesAsync() == 1)
@@ -111,6 +111,31 @@ namespace RestaurantRaterAPI.Controllers
 
             return InternalServerError();
         }
-      
+
+        //DeleteRating
+        [HttpDelete]
+        public async Task<IHttpActionResult> DeleteRating(int Id)
+        {
+            
+            if (!ModelState.IsValid)
+            {
+                return BadRequest("Not a valid Request");
+            }
+
+            Rating rating = await _context.Ratings.FindAsync(Id);
+            Restaurant restaurant = _context.Restaurants.FindAsync(rating.RestaurantId).Result;
+
+            if (rating == null)
+            {
+                return BadRequest("Rating Not Found");
+            }
+
+            _context.Ratings.Remove(rating);
+
+            if (await _context.SaveChangesAsync() == 1)
+                return Ok($"Rating #{rating.Id} for {restaurant.Name} was successfully deleted.");
+            else
+                return InternalServerError();
+        }
     }   
 }

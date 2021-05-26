@@ -51,6 +51,30 @@ namespace RestaurantRaterAPI.Controllers
             return NotFound();
         }
 
+        //GetAllRecommendedRestaurants
+        [HttpGet, Route("api/Restaurant/Recommended")]
+        public async Task<IHttpActionResult> GetAllRecommendedRestaurants()
+        {
+            /*
+            List<Restaurant> restaurants = await _context.Restaurants.ToListAsync();
+            List<Restaurant> restList = new List<Restaurant>();
+
+            foreach(Restaurant rest in restaurants)
+            {
+                if (rest.IsRecommended)
+                    restList.Add(rest);
+            }
+            if (restaurants.Count < 1)
+                return NotFound();
+
+            return Ok(restList);
+            */
+
+            //List<Restaurant> restaurants = await _context.Restaurants.Where(r => r.IsRecommended == true).ToListAsync(); //linq version of the above
+            List<Restaurant> restaurants =  _context.Restaurants.ToList().Where(r => r.IsRecommended == true).ToList(); //linq version of the above
+            return Ok(restaurants);
+        }
+
         //Update(PUT)
         [HttpPut]
         public async Task<IHttpActionResult> UpdateRestaurant(int Id,Restaurant updatedRestaurant)
@@ -70,6 +94,7 @@ namespace RestaurantRaterAPI.Controllers
             }
             return BadRequest(ModelState);
         }
+
 
         //Delete
         [HttpDelete]
